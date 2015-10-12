@@ -1,5 +1,6 @@
 from functools import wraps
-from flask import g, abort, request
+from flask import g, abort, request, url_for
+from .template import redirect
 
 from project.apps.user.models import User
 
@@ -23,10 +24,10 @@ def admin(fn):
     blog owner views decorator
     """
 
-    @wraps
+    @wraps(fn)
     def decorated_view(*args, **kwargs):
         if not g.user.can('login'):
-            abort(403)
+            return redirect(url_for('user.login'))
         return fn(*args, **kwargs)
     return decorated_view
 

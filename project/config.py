@@ -15,6 +15,11 @@ class MainConfig:
         'site',
         'user'
     )
+    # database
+    MONGODB_DB = 'blogger'
+    MONGODB_HOST = '127.0.0.1'
+    MONGODB_PORT = 27017
+    MONGODB_ALIAS = 'default'
 
     SESSION_COOKIE_NAME = 'project'
     LOGGER_NAME = 'blogger'
