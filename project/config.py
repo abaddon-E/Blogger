@@ -7,15 +7,17 @@ class MainConfig:
     """
 
     SECRET_KEY = 'this must change'
-    MEDIA = "%s/project/media/temp/" % os.path.abspath(os.curdir)
+    MEDIA = "%s/project/media/" % os.path.abspath(os.curdir)
     TEMPLATES = MEDIA + "Templates/"
     STATICS = MEDIA + "Statics/"
-
     # Registering Blueprints
-    APPS_LIST = ()
+    APPS_LIST = (
+        'site',
+        'user'
+    )
 
     SESSION_COOKIE_NAME = 'project'
-    LOGGER_NAME = 'bfl'
+    LOGGER_NAME = 'blogger'
     LOG_PATH = 'log/'  # '/var/log/project/'
     DEBUG_LOG = LOG_PATH + "debug.log"
     ERROR_LOG = LOG_PATH + "error.log"

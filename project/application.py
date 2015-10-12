@@ -1,23 +1,26 @@
 import inspect
 import logging
 import logging.handlers
-from flask import Flask
+from flask import Flask, session
 from flask.ext.babel import Babel
 from flask.ext.mongoengine import MongoEngine
 
 from project.config import MainConfig
 from project.extensions import cache
+from project.utils.auth import user_handler
+
 
 __all__ = ['init_app']
 
 
-def init_app(config, app_name):
+def init_app(config):
     """
     main function for initializing all
     """
-
     app = Flask(
-        app_name
+        __name__,
+        static_folder='media/statics',
+        template_folder='media/templates'
     )
 
     configure(app, config)
@@ -27,6 +30,7 @@ def init_app(config, app_name):
     logger(app)
     template_tags(app)
     extensions(app)
+    before_requests(app)
 
     return app
 
@@ -38,6 +42,7 @@ def configure(app, config):
     app.config.from_object(MainConfig())
     if config:
         app.config.from_object(config)
+
 
 
 def installing_blueprints(app):
@@ -116,3 +121,16 @@ def template_tags(app):
 
 def extensions(app):
     cache.init_app(app)
+
+
+def before_requests(app):
+    """
+    all before request functions
+    """
+
+    @app.before_request
+    def auth():
+        """
+        user session handler
+        """
+        user_handler(session)
