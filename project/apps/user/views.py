@@ -15,10 +15,10 @@ def login():
         return redirect(url_for('user.dashboard'))
     form = LoginForm(request.form)
     if request.method != 'POST':
-        return render('admin/login.html', form=form)
+        return render('admin/login.html', login_form=form)
     form.validate()
-    if form.errors != dict():
-        return render('admin/login.html', form=form)
+    if form.errors !=dict():
+        return render('admin/login.html', login_form=form)
     email = form.email.data
     password = form.password.data
     try:
@@ -26,7 +26,7 @@ def login():
         print check_password_hash(password, user.password)
     except:
         msg = 'user password not matched'
-        return render('admin/login.html', form=form, msg=msg)
+        return render('admin/login.html', login_form=form, msg=msg)
     session['email'] = user.email
     return redirect(url_for('user.dashboard'))
 

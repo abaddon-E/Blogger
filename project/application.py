@@ -8,7 +8,7 @@ from flask.ext.mongoengine import MongoEngine
 from project.config import MainConfig
 from project.extensions import cache
 from project.utils.auth import user_handler
-
+from project.utils.domain import detect_domain
 
 __all__ = ['init_app']
 
@@ -127,6 +127,12 @@ def before_requests(app):
     """
     all before request functions
     """
+    @app.before_request
+    def site():
+        """
+        site before handlers
+        """
+        detect_domain()
 
     @app.before_request
     def auth():

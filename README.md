@@ -1,3 +1,3 @@
-# Flask bone
+# Simple blog maker
 
-  This is a skeletone for create a big stracture application for flask
+  
