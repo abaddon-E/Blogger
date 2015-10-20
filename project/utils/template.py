@@ -1,4 +1,5 @@
-from flask import render_template, jsonify, request, redirect as flask_redirect
+from flask import render_template, jsonify, request,\
+    redirect as flask_redirect, g
 
 
 
@@ -6,7 +7,16 @@ def path(link):
     """
     make template address
     """
-    return link
+    if request.blueprint == 'user':
+        link = 'user/' + link
+        return link
+    if g.base_site.is_front:
+        link = 'front/' + link
+        return link
+    if g.user.can('login'):
+        link = 'admin/' + link
+        return link
+    return 'landings/' + g.base_site.current + '/' + link
 
 
 def render(template, **context):

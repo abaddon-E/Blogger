@@ -14,7 +14,7 @@ def landing():
     print g.base_site.current
     print g.base_site.is_front
     print '#' * 50
-    return render('landings/blogger/landing.html',
+    return render('index.html',
                   login_form=login_form,
                   register_form=register_form)
 
